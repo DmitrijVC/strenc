@@ -13,7 +13,7 @@ const CHARSET_S: &'static str = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZX
 #[proc_macro]
 pub fn strenc_initialize(_: TokenStream) -> TokenStream {
     let internal_module = quote! {
-        pub mod internal {
+        pub mod internal_strenc {
             use magic_crypt::MagicCryptTrait;
 
             pub fn decrypt_bytes(encrypted: &[u8], key: &str) -> String {
@@ -51,7 +51,7 @@ pub fn enc(tokens: TokenStream) -> TokenStream {
     let encrypted = Literal::byte_string(&bytes);
 
     let result = quote! {
-        crate::internal::decrypt_bytes(#encrypted, #key)
+        crate::internal_strenc::decrypt_bytes(#encrypted, #key)
     };
 
     result.into()
